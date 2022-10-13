@@ -5,7 +5,7 @@ const std::string MinicVersion = "3.35";
 #endif
 
 // *** options
-#define WITH_UCI    // include or not UCI protocol support
+// #define WITH_UCI    // include or not UCI protocol support
 #define WITH_XBOARD // include or not XBOARB protocol support
 #if !defined(WITH_SMALL_MEMORY)
 #define WITH_MAGIC  // use magic bitboard or HB ones
@@ -19,8 +19,10 @@ const std::string MinicVersion = "3.35";
 #endif // _MSC_VER
 #endif // WITH_SMALL_MEMORY
 
-//#define WITHOUT_FILESYSTEM              // some compiler don't support whole std:filesystem
-//#define LIMIT_THREADS_TO_PHYSICAL_CORES // in order to restrict thread to the number of physical core
+#if defined(ARDUINO) || defined(ESP32)
+#define WITHOUT_FILESYSTEM              // some compiler don't support whole std:filesystem
+#define LIMIT_THREADS_TO_PHYSICAL_CORES // in order to restrict thread to the number of physical core
+#endif
 //#define REPRODUCTIBLE_RESULTS           // clear state table betwwen all new search (not only all new games)
 #define WITH_NNUE_CLIPPED_RELU            // use clipped relu instead of relu for NNUE
 #ifndef __ANDROID__
