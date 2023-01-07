@@ -52,8 +52,8 @@ void MoveSorter::computeScore(Move& m) const {
          assert(pp > 0);
          assert(ppOpp > 0);
 
-         const std::span<const EvalScore> pst    = EvalConfig::PST[pp - 1];
-         const std::span<const EvalScore> pstOpp = EvalConfig::PST[ppOpp - 1];
+         const auto & pst    = EvalConfig::PST[pp - 1];
+         const auto & pstOpp = EvalConfig::PST[ppOpp - 1];
          // always use PST as a hint
          s += (ScaleScore(pst[ColorSquarePstHelper<C>(to)] - pst[ColorSquarePstHelper<C>(from)] + pstOpp[ColorSquarePstHelper<~C>(to)], gp))/2;
 
@@ -96,7 +96,7 @@ void MoveSorter::computeScore(Move& m) const {
                // move (safely) leaving threat square from null move search
                if (!isInCheck && refutation != INVALIDMINIMOVE && from == correctedMove2ToKingDest(refutation) && Searcher::SEE_GE(p, m, -80)) s += 512;
                // always use PST to compensate low value history
-               const std::span<const EvalScore> pst = EvalConfig::PST[Abs(pp) - 1];
+               const auto & pst = EvalConfig::PST[Abs(pp) - 1];
                s += (ScaleScore(pst[ColorSquarePstHelper<C>(correctedTo)] - pst[ColorSquarePstHelper<C>(from)], gp))/2;
             }
          }

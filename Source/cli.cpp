@@ -232,7 +232,8 @@ bool cliManagement(const std::string & firstArg, int argc, char** argv) {
    Logging::LogIt(Logging::logInfo) << "You can use -xboard command line option to enter xboard mode";
 #endif
 
-   const auto args {std::span(argv, size_t(argc))};
+   // silly copy of arguments for safer use afterwards ...
+   const auto args {std::vector(argv, argv + argc)};
 
    if (firstArg == "-selfplay") {
       DepthType d = 15; // this is "search depth", not genFenDepth !
